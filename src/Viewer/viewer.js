@@ -7,6 +7,9 @@ import * as cornerstoneWebImageLoader from "cornerstone-web-image-loader";
 import * as cornerstoneWodoImageLoader from "cornerstone-wado-image-loader";
 import * as dicomParser from "dicom-parser";
 import StackElement from "./stackElement";
+import path from 'path';
+
+
 
 cornerstoneTools.external.cornerstone = cornerstone;
 cornerstoneTools.init();
@@ -56,6 +59,7 @@ class CornerstoneElement extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+
       stack:{StackElement},
       viewport: cornerstone.getDefaultViewport(null, undefined),
       imageId: props.stack.imageIds[0],
@@ -64,7 +68,7 @@ class CornerstoneElement extends React.Component {
       isEnableRectangleEvent:false,
       isEnableMagnifyEvent:false,
       isEnableRotateEvent:false,
-      isEnableScrollEvent:false
+      isEnableScrollEvent:false,
       //switchPanHandlar: this.switchPanHandlar.bind(this)
     };
   }
@@ -138,7 +142,13 @@ class CornerstoneElement extends React.Component {
     // Enable the DOM Element for use with Cornerstone
      cornerstone.enable(element);
     // Load the first image in the stack
-    cornerstone.loadImage('wadouri:'+this.state.imageId).then(image => {
+    const ext = path.extname(this.state.imageId);
+    console.log('sss'+ ext);
+    var url =this.state.imageId;
+    if(ext==='.dcm'){
+      url ='wadouri:'+this.state.imageId
+    }
+     cornerstone.loadImage(url).then(image => {
       // Display the first image
       cornerstone.displayImage(element, image);
 
@@ -181,41 +191,10 @@ class CornerstoneElement extends React.Component {
     cornerstoneTools.setToolActive("PanMultiTouch", {});
     cornerstoneTools.setToolActive("ZoomMouseWheel", {});
     cornerstoneTools.setToolActive("ZoomTouchPinch", {});
-   // cornerstoneTools.setToolActive('StackScrollTool', { mouseButtonMask: 1 })
-   // cornerstoneTools.setToolActive('ArrowAnnotate', { mouseButtonMask: 1 })
-   // cornerstoneTools.setToolActive('Rotate',{});
-    //cornerstoneTools.setToolActive('Magnify', { mouseButtonMask: 1 })
 
-  }
-
-  //
-// Tool State 
-//
-
-disable = function(){
-    const canvas = this.element;
-    cornerstoneTools.length.disable(canvas)
-    cornerstoneTools.lengthTouch.disable(canvas)
-  }
-  
-  enable = function(){
-    const canvas = this.element;
-    cornerstoneTools.length.enable(canvas)
-    cornerstoneTools.lengthTouch.enable(canvas)
-  }
-  
-  activate = function(){
-    const canvas = this.element;
-    cornerstoneTools.length.activate(canvas, 1)
-    cornerstoneTools.lengthTouch.activate(canvas)
-  }
-  
-  deactivate = function(){
-    const canvas = this.element;
-    cornerstoneTools.length.deactivate(canvas)
-    cornerstoneTools.lengthTouch.deactivate(canvas)
   }
 }
 
 
 export default CornerstoneElement;
+
