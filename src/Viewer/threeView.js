@@ -23,7 +23,7 @@ const containers = {
     position: "fixed",
     top: "10px",
     right: "10px",
-    zIndex: "1"
+    z_Index: "1"
   } ;
 
 class ThreeView extends Component {
@@ -47,6 +47,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
+
 camera.position.x = 150;
 camera.position.y = 150;
 camera.position.z = 100;
@@ -72,7 +73,7 @@ loader
     loader.free();
 
     const stackHelper = new AMI.StackHelper(stack);
-     stackHelper.bbox.color = colors.red;
+    stackHelper.bbox.color = colors.red;
     stackHelper.border.color = colors.blue;
 
     scene.add(stackHelper);

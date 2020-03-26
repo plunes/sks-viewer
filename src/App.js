@@ -5,6 +5,7 @@ import stack from './Viewer/stackElement';
 import Shape from './Viewer/shape';
 import Model3DViewer from './modelViewer/model3DViewer';
 import ThreeView from './Viewer/threeView';
+//import ThreeDRender from './Viewer/threeDRender';
 
 
 
@@ -18,6 +19,7 @@ function App() {
       <Shape />
       </div>
 
+    
       <div>
         <ThreeView />
         </div>
